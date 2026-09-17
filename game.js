@@ -252,14 +252,16 @@
     for (var pass = 0; pass < 2; pass++) {
       var bs = window.getComputedStyle(document.body);
       var gap = parseFloat(window.getComputedStyle(app).rowGap) || 0;
-      var used = (parseFloat(bs.paddingTop) || 0) + (parseFloat(bs.paddingBottom) || 0) + 4;
+      var used = (parseFloat(bs.paddingTop) || 0) + (parseFloat(bs.paddingBottom) || 0) + 8;
       if (!$('hud').hidden) used += $('hud').offsetHeight + gap;
       used += $('bar').offsetHeight + gap;
       if ($('rotate').offsetHeight) used += $('rotate').offsetHeight + gap;
 
-      var availH = Math.max(180, window.innerHeight - used);
+      var availH = window.innerHeight - used;
       var byHeight = availH * (W / H);
-      app.style.maxWidth = Math.round(Math.min(980, byHeight)) + 'px';
+      // Nunca por debajo de 320px: si el contenedor es muy bajo preferimos
+      // que la página se pueda scrollear antes que encogerse hasta no verse.
+      app.style.maxWidth = Math.round(clamp(byHeight, 320, 980)) + 'px';
     }
   }
 

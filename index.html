@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Juego de penales: jugá contra la máquina o de a dos. Sin conexión, sin cuentas, sin datos.">
+<title>Penales — Fútbol</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23fff'/%3E%3Cpath d='M16 6l5 3.6-1.9 5.9h-6.2L11 9.6z' fill='%23111'/%3E%3C/svg%3E">
+</head>
+<body>
+<div id="app">
+
+  <header id="hud" hidden>
+    <div class="side">
+      <span class="chip" id="hudColor1"></span>
+      <span class="tname" id="hudName1">Local</span>
+    </div>
+    <div class="center">
+      <div class="score"><span id="hudScore1">0</span><b>-</b><span id="hudScore2">0</span></div>
+      <div class="stage-label" id="hudStage">Ronda 1 de 5</div>
+    </div>
+    <div class="side right">
+      <span class="tname" id="hudName2">Visitante</span>
+      <span class="chip" id="hudColor2"></span>
+    </div>
+    <div class="marks">
+      <div class="markrow" id="marks1"></div>
+      <div class="markrow" id="marks2"></div>
+    </div>
+  </header>
+
+  <div id="stage">
+    <canvas id="cv" width="900" height="560" aria-label="Cancha de penales"></canvas>
+
+    <div id="overlay">
+
+      <section class="screen" id="scMenu">
+        <h1>PENALES</h1>
+        <p class="sub">Definí la serie desde los doce pasos</p>
+        <div class="btns">
+          <button type="button" class="big" id="btnCpu">1 jugador <small>vs. la máquina</small></button>
+          <button type="button" class="big" id="btnDuo">2 jugadores <small>en la misma pantalla</small></button>
+        </div>
+        <p class="records" id="records"></p>
+        <p class="foot">Sin internet, sin cuentas, sin publicidad.</p>
+      </section>
+
+      <section class="screen" id="scConfig" hidden>
+        <h2>Los equipos</h2>
+        <div class="teams">
+          <div class="teambox">
+            <label for="name1">Equipo 1</label>
+            <input type="text" id="name1" maxlength="16" autocomplete="off" spellcheck="false" value="Local">
+            <div class="swatches" id="sw1"></div>
+          </div>
+          <div class="teambox">
+            <label for="name2">Equipo 2</label>
+            <input type="text" id="name2" maxlength="16" autocomplete="off" spellcheck="false" value="Visitante">
+            <div class="swatches" id="sw2"></div>
+          </div>
+        </div>
+        <div class="diffbox" id="diffBox">
+          <span class="lbl">Dificultad</span>
+          <div class="segmented" id="diffSeg"></div>
+        </div>
+        <div class="btns row">
+          <button type="button" class="ghost" id="btnBack">Volver</button>
+          <button type="button" class="big" id="btnStart">¡A jugar!</button>
+        </div>
+      </section>
+
+      <section class="screen dim" id="scHandoff" hidden>
+        <div class="handcard">
+          <p class="role" id="handRole">Arquero</p>
+          <h2 id="handTeam">Local</h2>
+          <p class="sub" id="handHint">Que el otro no mire la pantalla.</p>
+          <button type="button" class="big" id="btnHand">Estoy listo</button>
+        </div>
+      </section>
+
+      <section class="screen dim" id="scOutcome" hidden>
+        <div class="outcard">
+          <h2 id="outTitle">¡GOL!</h2>
+          <p class="sub" id="outDetail"></p>
+          <button type="button" class="big" id="btnNext">Seguir</button>
+        </div>
+      </section>
+
+      <section class="screen dim" id="scFinal" hidden>
+        <div class="outcard">
+          <p class="role" id="finLabel">Ganador</p>
+          <h2 id="finTitle">Local</h2>
+          <p class="sub" id="finDetail"></p>
+          <div class="btns row">
+            <button type="button" class="ghost" id="btnMenu">Menú</button>
+            <button type="button" class="big" id="btnAgain">Revancha</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <footer id="bar">
+    <p id="hint">Elegí un modo para empezar</p>
+    <button type="button" id="btnMute" class="icon" aria-pressed="false" title="Sonido">Sonido: sí</button>
+  </footer>
+
+  <p id="rotate">Girá el celular para ver la cancha más grande</p>
+
+</div>
+<script src="game.js"></script>
+</body>
+</html>
